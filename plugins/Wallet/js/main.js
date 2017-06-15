@@ -4,13 +4,11 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers/index.js'
 import rootSaga from './sagas/index.js'
-import { fetchData } from './actions/wallet.js'
+import { getLockStatus, getSyncState, getBalance, getTransactions } from './actions/wallet.js'
 import WalletApp from './components/app.js'
 
-// initWallet initializes a new wallet plugin and returns the root react
-// component for the plugin.
 export const initWallet = () => {
-	// initialize the redux store
+	// Set up saga middleware system
 	const sagaMiddleware = createSagaMiddleware()
 	const store = createStore(
 		rootReducer,
@@ -18,13 +16,23 @@ export const initWallet = () => {
 	)
 	sagaMiddleware.run(rootSaga)
 
-	// update state when plugin is focused
-	window.onfocus = () => {
-		store.dispatch(fetchData())
+	// Get initial UI state
+	const updateState = () => {
+		store.dispatch(getLockStatus())
+		store.dispatch(getSyncState())
+		if (store.getState().wallet.get('unlocked')) {
+			store.dispatch(getBalance())
+			store.dispatch(getTransactions())
+		}
 	}
 
-	// return the wallet plugin root component, a redux Provider wrapping the
-	// root wallet component
+	// Poll Siad for state changes
+	setInterval(updateState, 5000)
+	updateState()
+
+	// update state when plugin is opened
+	window.onfocus = updateState
+
 	return (
 		<Provider store={store}>
 			<WalletApp />

@@ -170,6 +170,3 @@ export const setChangePasswordError = (error) => ({
 	type: constants.SET_CHANGE_PASSWORD_ERROR,
 	error,
 })
-export const fetchData = () => ({
-	type: constants.FETCH_DATA,
-})

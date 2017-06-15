@@ -182,7 +182,3 @@ export const showAllowanceConfirmation = (allowance) => ({
 export const hideAllowanceConfirmation = () => ({
 	type: constants.HIDE_ALLOWANCE_CONFIRMATION,
 })
-export const fetchData = () => ({
-	type: constants.FETCH_DATA,
-})
-

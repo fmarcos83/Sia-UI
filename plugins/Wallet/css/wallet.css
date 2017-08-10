@@ -431,3 +431,22 @@
 	height: 180px;
 	overflow-y: scroll;
 }
+.generate-address-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.generate-address-button > span {
+	font-size: 13px;
+}
+.generate-address-button > i {
+	margin-left: 10px;
+	cursor: pointer;
+}
+.receive-prompt > .footnote {
+	font-size: 11px;
+	margin-top: 5px;
+}
+.receiveprompt-dismissbtn {
+	margin-top: 20px;
+}
